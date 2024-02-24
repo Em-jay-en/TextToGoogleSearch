@@ -1,5 +1,5 @@
 # Python program to automate analyst Google Searches
-# Currently on Chrome and ChromeDriver versions 113
+# Currently on Chrome and ChromeDriver versions 122
 #Stuff I'm using:
 #Selenium browser automation https://www.selenium.dev/
 #A ChromeDriver manager https://pypi.org/project/webdriver-manager/
@@ -12,7 +12,9 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
-from Screenshot import Screenshot
+from selenium.webdriver.chrome.service import Service
+import base64
+import os
 
 # import GUI library
 import tkinter as tk
@@ -41,7 +43,7 @@ def select_directory():
 #Create User Interface
 root = tk.Tk()
 root.title("Text to Google Search PDF")
-root.geometry('350x350')
+root.geometry('400x350')
 
 #Create master frame
 master_frame = tk.Frame(root)
@@ -68,7 +70,7 @@ directory_button.pack(side=tk.LEFT)
 selected_directory_label = tk.Label(directory_frame, text="Selected directory: ")
 selected_directory_label.pack(side=tk.LEFT, padx=15)
 #End Output Directory Selection frame
-
+#End of Create User Interface
 ############################################################################
 
 def TextToPDF():
@@ -89,6 +91,7 @@ def TextToPDF():
 
     #set output path
     pdf_file_path = directory
+
     #Set options to headless mode and pdf printing for Chrome webdriver instance
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--headless")
@@ -97,27 +100,44 @@ def TextToPDF():
     chrome_options.add_argument('--disable-extensions')
     chrome_options.add_argument("--window-size=1600,1000")
     chrome_options.add_argument('--log-level=1')
-    
+
     #specify chromedriver.exe path
-    driver_path = r"C:\Users\mattn\Life\Coding\ChromeDriver\chromedriver.exe"
+    driver_path = r"C:\Users\mattn\Life\Coding\ChromeDriver\chromedriver-win64\chromedriver.exe"
     #initialize driver
-    driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
+    driver = webdriver.Chrome(executable_path=driver_path, options=chrome_options)
     
-    ob = Screenshot.Screenshot()
+    #Replace any invalid characters in the TermsList with an underscore
+    def replace_invalid_chars(s):
+        invalid_characters = set(['<', '>', ':', '"', '/', '\\', '|', '?', '*'])
+        return ''.join(char if char not in invalid_characters else '_' for char in s)
+    
+    # Clean invalid characters from each term in TermsList
+    Cleaned_terms = [replace_invalid_chars(term) for term in TermsList]
 
     #Loop through our list using driver.get() to pull the webpages
     #Hopefully this prints to pdf
     for i in range(len(URL_List)):
+
+        # Formulate the PDF file name based on the current term and date
+        pdf_file_name = f"www_{Cleaned_terms[i]}_Google_Search_{date}.pdf"
+
+        # Create the full path by joining the output directory and file name
+        full_path = os.path.join(directory, pdf_file_name)
+
         #Bring up the Google Search
         driver.get(URL_List[i])
-    
-        #Remove the searchbar that stays at the top of the screen, blocks info further down.
-        #This also makes it so that you can't technically see what was searched apart from the filename. RIP.
-        search_bar = driver.find_element_by_xpath('//*[@id="searchform"]')
-        driver.execute_script("""var element = arguments[0]; element.parentNode.removeChild(element);""", search_bar)
-        #Take screenshot
-        img_url = ob.full_screenshot(driver, save_path=pdf_file_path, image_name=("www_" + TermsList[i] + "_Google Search_" + date + ".pdf"), is_load_at_runtime=True, load_wait_time=3)
-    
+        # Sending command to CDP to generate PDF
+        result = driver.execute_cdp_cmd("Page.printToPDF", {
+        "printBackground": True,
+        "landscape": False,
+        # Add other PDF generation options as needed
+        })
+        # The result is a base64 encoded PDF
+        pdf_content = result['data']
+        # Decode the PDF and save it to a file
+        with open(full_path, "wb") as f:
+            f.write(base64.b64decode(pdf_content))
+
     #Ragequit
     driver.quit()
 
