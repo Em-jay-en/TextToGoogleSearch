@@ -3,7 +3,6 @@
 #Stuff I'm using:
 #Selenium browser automation https://www.selenium.dev/
 #A ChromeDriver manager https://pypi.org/project/webdriver-manager/
-#A Selenium screenshot package https://pypi.org/project/Selenium-Screenshot/
 
 #Chrome folder: C:\Program Files\Google\Chrome\Application
 
