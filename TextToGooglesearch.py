@@ -7,7 +7,6 @@
 
 #Chrome folder: C:\Program Files\Google\Chrome\Application
 
-# import webdriver, Service, Options, webdrivermanager
 from selenium import webdriver
 import base64
 import os
