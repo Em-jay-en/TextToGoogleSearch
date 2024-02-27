@@ -9,19 +9,15 @@
 
 # import webdriver, Service, Options, webdrivermanager
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service
 import base64
 import os
+import time
 
 # import GUI library
 import tkinter as tk
 from tkinter import filedialog
 
-#import datetime
-#get the date, stick it in a variable (date), we use this later
+# import datetime
 from datetime import date
 today = date.today()
 date = today.strftime("%m-%d-%Y")
@@ -137,6 +133,9 @@ def TextToPDF():
         # Decode the PDF and save it to a file
         with open(full_path, "wb") as f:
             f.write(base64.b64decode(pdf_content))
+        #Wait 20 seconds every 15 terms to avoid Google throwing to captcha
+        if (i + 1) % 15 == 0 and i != len(URL_List) - 1:
+            time.sleep(20)    
 
     #Ragequit
     driver.quit()
