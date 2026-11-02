@@ -1,14 +1,6 @@
 # Text to Google Search Tabs and PDFs
 
-A small Python desktop tool for analysts who need to run a list of Google searches and keep a record of the results. Load a text file of search terms, open them in batches in Chrome, review each page yourself, then save every loaded results page as a date-stamped PDF with clickable links and selectable text.
-
-## Why it works this way
-
-The first version drove a headless browser to run the searches automatically. Google blocked it on the first request, and the right response to that is not to work around the block. The tool was redesigned so that a person stays in the loop:
-
-- You open the searches in a normal, visible Chrome window, a batch at a time.
-- You review the pages and handle any verification prompt yourself.
-- Saving afterwards works only on pages that are already loaded. It sends no new requests to Google.
+A small Python desktop tool for analysts who need to run a list of Google searches and keep a record of the results. Load a text file of search terms, open them in batches in Chrome, review each page yourself, then save every loaded results page as a date-stamped PDF with clickable links and selectable text. Designed to keep a person in the loop; see Design history below.
 
 ## Features
 
@@ -52,7 +44,7 @@ Selenium 4.6+ finds or downloads a matching ChromeDriver automatically, so no ma
    ```
 2. Run the script:
    ```
-   python TextToGoogleSearchPDF.py
+   python TextToGoogleSearchTabsPDF.py
    ```
 3. Click **Select Text File of Search Terms** and choose your file.
 4. Click **Select Output Folder** and choose where the PDFs should go.
@@ -90,6 +82,14 @@ Neither should be committed to version control.
 A personal project built to speed up search documentation for investigative work. It was built with help from AI tools (ChatGPT and Claude) for learning Tkinter and Chrome's debugging interface and for reviewing changes, and tested on live batches of searches.
 
 Use it in line with Google's terms of service and your organization's policies.
+
+## Design history: from automated to human-in-the-loop
+
+The first version of this tool drove a headless browser to run the searches and saves fully automatically. Google blocked it on the first request, and the right response to that is not to work around the block. The tool was redesigned so that a person stays in the loop:
+
+- You open the searches in a normal, visible Chrome window, a batch at a time.
+- You review the pages and handle any verification prompt yourself.
+- Saving afterwards works only on pages that are already loaded. It sends no new requests to Google.
 
 ## License
 
