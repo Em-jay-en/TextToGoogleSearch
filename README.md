@@ -79,17 +79,17 @@ Neither should be committed to version control.
 
 ## About this project
 
-A personal project built to speed up search documentation for investigative work. It was built with help from AI tools (ChatGPT and Claude) for learning Tkinter and Chrome's debugging interface and for reviewing changes, and tested on live batches of searches.
+A personal project built to speed up search documentation for investigative work. I wrote the first version's core logic myself (reading search terms, building URLs, cleaning filenames, looping through them), using ChatGPT to learn the Tkinter GUI library and configure the interface. That version drove a headless browser to run the searches and save the results fully automatically.
 
-Use it in line with Google's terms of service and your organization's policies.
-
-## Design history: from automated to human-in-the-loop
-
-The first version of this tool drove a headless browser to run the searches and saves fully automatically. Google blocked it on the first request, and the right response to that is not to work around the block. The tool was redesigned so that a person stays in the loop:
+Google started blocking automated searches more aggressively, and the right response to that is not to work around the block. The tool was redesigned, largely written by Claude from my direction, so that a person stays in the loop:
 
 - You open the searches in a normal, visible Chrome window, a batch at a time.
 - You review the pages and handle any verification prompt yourself.
 - Saving afterwards works only on pages that are already loaded. It sends no new requests to Google.
+
+I tested each version on live batches of searches.
+
+Use it in line with Google's terms of service and your organization's policies.
 
 ## License
 
