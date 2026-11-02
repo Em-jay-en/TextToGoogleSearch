@@ -66,7 +66,7 @@ Selenium 4.6+ finds or downloads a matching ChromeDriver automatically, so no ma
 
 - Tested on Windows with Chrome. Chrome detection includes common macOS and Linux locations, but those have not been tested.
 - The tool uses its own Chrome profile (a `chrome_profile` folder next to the script), so it does not have your logins or extensions.
-- Pages are printed on wide, tall paper (11 x 17 in) so Google uses its desktop layout. Scripts are disabled while printing, so interactive elements (for example expandable sections) appear as they were when captured.
+- Pages are printed in portrait orientation on 11 x 17 in pages, with scripts disabled while printing, so interactive elements (for example expandable sections) may not appear exactly as they did on screen.
 - The last open tab is never closed automatically, because closing the final tab would shut Chrome down.
 - Very long pages are capped at 16,000 pixels tall in the image fallback.
 - The tool does not try to bypass Google's verification prompts. It skips those tabs until you resolve them yourself.
