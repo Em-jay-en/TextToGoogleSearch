@@ -1,0 +1,6 @@
+settings.json
+chrome_profile/
+__pycache__/
+*.pdf
+OutputDump/
+40Names.txt
