@@ -52,7 +52,7 @@ Selenium 4.6+ finds or downloads a matching ChromeDriver automatically, so no ma
    ```
 2. Run the script:
    ```
-   python TextToGoogleSearchTabsPDF.py
+   python TextToGoogleSearchPDF.py
    ```
 3. Click **Select Text File of Search Terms** and choose your file.
 4. Click **Select Output Folder** and choose where the PDFs should go.

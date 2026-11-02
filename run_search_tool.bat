@@ -1,4 +1,4 @@
 @echo off
 cd /d "%~dp0"
-python TextToGoogleSearchTabsPDF.py
+python TextToGoogleSearchPDF.py
 pause
